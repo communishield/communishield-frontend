@@ -1,5 +1,5 @@
-import { Header } from './components/layout/header';
+import { Root } from './components/layout/root';
 
 export function App() {
-	return <Header />;
+	return <Root />;
 }

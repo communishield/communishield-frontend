@@ -16,7 +16,6 @@ export const imageStyle = style({
 });
 
 export const titleStyle = style({
-	fontFamily: vars.font.family,
 	fontStyle: 'normal',
 	fontWeight: vars.font.weight.bold,
 	fontSize: vars.font.size.title,

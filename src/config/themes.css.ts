@@ -6,7 +6,6 @@ export const vars = createGlobalTheme(':root', {
 		primary: '#000000',
 	},
 	font: {
-		family: 'Inter, sans-serif',
 		size: {
 			title: '64px',
 		},
