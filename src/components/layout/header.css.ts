@@ -1,23 +1,13 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../config/themes.css';
 
 export const headerContainer = style({
-	display: 'flex',
-	flexDirection: 'row',
-	alignItems: 'center',
-	padding: '32px',
-	gap: vars.spacing.medium,
-	width: '100%',
+  padding: '16px',
+  width: '100%',
+  backgroundColor: 'var(--green-1)',
+  boxShadow: '0 4px 8px var(--black-a1)',
 });
 
 export const imageStyle = style({
-	width: '96px',
-	height: '96px',
-});
-
-export const titleStyle = style({
-	fontStyle: 'normal',
-	fontWeight: vars.font.weight.bold,
-	fontSize: vars.font.size.title,
-	color: vars.color.primary,
+  width: '96px',
+  height: '96px',
 });
