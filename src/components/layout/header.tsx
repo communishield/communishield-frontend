@@ -2,9 +2,16 @@ import * as styles from './header.css';
 import Logo from '../../assets/logo.png';
 import { Flex, Heading } from '@radix-ui/themes';
 import { Link } from '../link';
-import { NavigationMenu } from './navigation-menu';
+import { Navigation } from './navigation';
+import { useState } from 'react';
 
 export function Header() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  window.addEventListener('resize', () => {
+    setIsCollapsed(window.innerWidth < 800);
+  });
+
   return (
     <Flex asChild direction="row" gap="4" align="center" justify="between">
       <header className={styles.headerContainer}>
@@ -22,7 +29,7 @@ export function Header() {
             </Heading>
           </Link>
         </Flex>
-        <NavigationMenu isCollapsed={false} />
+        <Navigation isCollapsed={isCollapsed} />
       </header>
     </Flex>
   );

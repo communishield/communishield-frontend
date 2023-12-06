@@ -7,14 +7,14 @@ export function Signout() {
   const { setUser } = useContext(UserContext);
   setUser(undefined);
 
-  window.location.href = '/';
+  window.location.href = '/signin';
 
   return (
     <>
       <Text>You are signed out. Redirecting...</Text>
       <Text>
         If you are not redirected automatically, click{' '}
-        <Link href="/" color="indigo">
+        <Link href="/signin" color="indigo">
           here
         </Link>
         .
