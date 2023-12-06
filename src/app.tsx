@@ -10,6 +10,7 @@ import { LoggedInValidator } from './components/logged-in-validator';
 import { HomePage } from './pages/home/home-page';
 import { useCookieState } from './hooks/cookieState';
 import { User } from './models/user';
+import { Signout } from './pages/signout/signout.page';
 
 export function App() {
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -43,7 +44,8 @@ export function App() {
                 }
               />
               <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signin" element={<LoginPage />} />
+              <Route path="/signout" element={<Signout />} />
             </Routes>
           </Root>
         </UserContext.Provider>

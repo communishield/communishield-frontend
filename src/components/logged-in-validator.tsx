@@ -7,14 +7,14 @@ export function LoggedInValidator({ children }: PropsWithChildren) {
   const { user } = useContext(UserContext);
 
   if (!user) {
-    window.location.href = '/login';
+    window.location.href = '/signin';
 
     return (
       <>
         <Text color="red">You are not logged in. Redirecting...</Text>
         <Text color="red">
           If you are not redirected automatically, click{' '}
-          <Link href="/login" color="indigo">
+          <Link href="/signin" color="indigo">
             here
           </Link>
           .

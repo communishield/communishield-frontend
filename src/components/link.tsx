@@ -3,8 +3,8 @@ import { Link as LinkPrimitive } from '@radix-ui/themes';
 
 type LinkProps = Parameters<typeof LinkPrimitive>[0];
 
-export function Link({ ...res }: LinkProps) {
-  const className = (res.className ?? '')
+export function Link({ className: incomingClassName, ...res }: LinkProps) {
+  const className = (incomingClassName ?? '')
     .split(' ')
     .concat(styles.link)
     .join(' ');
