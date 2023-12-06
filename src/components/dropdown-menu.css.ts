@@ -1,40 +1,40 @@
 import { style } from '@vanilla-extract/css';
 
 export const button = style({
-  cursor: 'pointer',
-  backgroundColor: 'transparent',
-  width: 'fit-content',
-  height: 'fit-content',
-  margin: 0,
-  padding: 0,
-  border: 'none',
-  userSelect: 'none',
+	cursor: 'pointer',
+	backgroundColor: 'transparent',
+	width: 'fit-content',
+	height: 'fit-content',
+	margin: 0,
+	padding: 0,
+	border: 'none',
+	userSelect: 'none',
 });
 
 export const content = style({
-  minWidth: '10rem',
-  backgroundColor: 'var(--green-1)',
-  boxShadow: '0 4px 8px var(--black-a1)',
-  padding: '8px 0',
+	minWidth: '10rem',
+	backgroundColor: 'var(--green-1)',
+	boxShadow: '0 4px 8px var(--black-a1)',
+	padding: '8px 0',
 });
 
 export const item = style({
-  display: 'block',
-  fontSize: '1.125em',
-  padding: '8px 16px',
-  color: 'var(--green-11)',
-  textDecoration: 'none',
-  userSelect: 'none',
-  outline: 'none',
+	display: 'block',
+	fontSize: '1.125em',
+	padding: '8px 16px',
+	color: 'var(--green-11)',
+	textDecoration: 'none',
+	userSelect: 'none',
+	outline: 'none',
 
-  '&[data-highlighted]': {
-    backgroundColor: 'var(--green-9)',
-    color: 'var(--green-1)',
-  },
+	'&[data-highlighted]': {
+		backgroundColor: 'var(--green-9)',
+		color: 'var(--green-1)',
+	},
 } as Record<string, unknown>);
 
 export const separator = style({
-  height: '1px',
-  backgroundColor: 'var(--green-9)',
-  margin: '4px 0',
+	height: '1px',
+	backgroundColor: 'var(--green-9)',
+	margin: '4px 0',
 });

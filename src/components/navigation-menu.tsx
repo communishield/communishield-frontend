@@ -4,30 +4,30 @@ import { Flex, Separator } from '@radix-ui/themes';
 import { PropsWithChildren } from 'react';
 
 export type NavigationMenuLinkProps = {
-  readonly href: string;
+	readonly href: string;
 } & PropsWithChildren;
 
 export function NavigationMenu({ children }: PropsWithChildren) {
-  return (
-    <NavigationMenuPrimitive.Root>
-      <Flex asChild gap="4" align="center">
-        <NavigationMenuPrimitive.List>{children}</NavigationMenuPrimitive.List>
-      </Flex>
-    </NavigationMenuPrimitive.Root>
-  );
+	return (
+		<NavigationMenuPrimitive.Root>
+			<Flex asChild gap="4" align="center">
+				<NavigationMenuPrimitive.List>{children}</NavigationMenuPrimitive.List>
+			</Flex>
+		</NavigationMenuPrimitive.Root>
+	);
 }
 
 export function NavigationMenuLink({
-  href,
-  children,
+	href,
+	children,
 }: NavigationMenuLinkProps) {
-  return (
-    <NavigationMenuPrimitive.Link className={styles.link} href={href}>
-      {children}
-    </NavigationMenuPrimitive.Link>
-  );
+	return (
+		<NavigationMenuPrimitive.Link className={styles.link} href={href}>
+			{children}
+		</NavigationMenuPrimitive.Link>
+	);
 }
 
 export function NavigationMenuSeparator() {
-  return <Separator orientation="vertical" size="2" />;
+	return <Separator orientation="vertical" size="2" />;
 }
