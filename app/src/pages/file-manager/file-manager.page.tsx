@@ -27,6 +27,7 @@ export function FileManagerPage() {
     | undefined
   >(undefined);
   const [directory, setDirectory] = useState<Directory | undefined>(undefined);
+  const [searchQuery, setSearchQuery] = useState<string>('/');
 
   const actionContextValue = useMemo(
     () => ({
@@ -144,15 +145,15 @@ export function FileManagerPage() {
     })();
   });
 
-  useEffect(() => {
-    handleSearch(directory?.path ?? '/');
-  }, [actionParams]);
-
   return (
     <ActionContext.Provider value={actionContextValue}>
       <div className={styles.container}>
         <section className={styles.search}>
-          <Search onSubmit={handleSearch} />
+          <Search
+            path={searchQuery}
+            setPath={setSearchQuery}
+            onSubmit={handleSearch}
+          />
         </section>
         <section className={styles.fileManager}>
           <FileTable
