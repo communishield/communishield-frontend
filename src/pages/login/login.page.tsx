@@ -11,6 +11,7 @@ import { Link } from '../../components/link';
 import { Communishield } from '../../third-parties/communishield/client';
 import { UserContext } from '../../contexts/user.context';
 import { ErrorContext } from '../../contexts/error.context';
+import { UnexpectedError } from '../../errors/unexpected.error';
 
 export default function LoginPage() {
   const { setUser } = useContext(UserContext);
@@ -27,19 +28,22 @@ export default function LoginPage() {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    Communishield.login({
-      username: formData.username,
-      password: formData.password,
-    })
-      .then(token => {
-        setUser({ token });
-        window.location.href = '/';
-      })
-      .catch(error => {
-        setError(error);
+
+    try {
+      const token = await Communishield.login({
+        username: formData.username,
+        password: formData.password,
       });
+      Communishield.setToken(token);
+      const user = await Communishield.getUser(formData.username);
+
+      setUser({ token, ...user });
+      window.location.href = '/';
+    } catch (error) {
+      setError(error instanceof Error ? error : new UnexpectedError());
+    }
   };
 
   return (

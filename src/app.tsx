@@ -9,10 +9,11 @@ import { UserContext } from './contexts/user.context';
 import { LoggedInValidator } from './components/logged-in-validator';
 import { HomePage } from './pages/home/home-page';
 import { useCookieState } from './hooks/cookieState';
+import { User } from './models/user';
 
 export function App() {
   const [error, setError] = useState<Error | undefined>(undefined);
-  const [user, setUser] = useCookieState<{ token: string }>('user');
+  const [user, setUser] = useCookieState<User>('user');
 
   const errorContextValue = useMemo(
     () => ({ error, setError }),
