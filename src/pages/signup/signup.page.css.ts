@@ -128,4 +128,8 @@ export const submitButton = style({
   ':hover': {
     backgroundColor: 'var(--green-10)',
   },
+  ':disabled': {
+    backgroundColor: 'var(--slate-5)',
+    cursor: 'not-allowed',
+  },
 });
