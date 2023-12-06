@@ -6,10 +6,13 @@ import { ErrorContext } from './contexts/error.context';
 import { useMemo, useState } from 'react';
 import { Dialog } from './components/error-dialog';
 import { UserContext } from './contexts/user.context';
+import { LoggedInValidator } from './components/logged-in-validator';
+import { HomePage } from './pages/home/home-page';
+import { useCookieState } from './hooks/cookieState';
 
 export function App() {
   const [error, setError] = useState<Error | undefined>(undefined);
-  const [user, setUser] = useState<{ token: string } | undefined>(undefined);
+  const [user, setUser] = useCookieState<{ token: string }>('user');
 
   const errorContextValue = useMemo(
     () => ({ error, setError }),
@@ -30,7 +33,14 @@ export function App() {
           )}
           <Root>
             <Routes>
-              <Route path="/" element={<h1>Home</h1>} />
+              <Route
+                path="/"
+                element={
+                  <LoggedInValidator>
+                    <HomePage />
+                  </LoggedInValidator>
+                }
+              />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
             </Routes>
