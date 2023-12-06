@@ -11,6 +11,7 @@ import { HomePage } from './pages/home/home-page';
 import { useCookieState } from './hooks/cookieState';
 import { User } from './models/user';
 import { Signout } from './pages/signout/signout.page';
+import { FileManagerPage } from './pages/file-manager/file-manager.page';
 
 export function App() {
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -40,6 +41,14 @@ export function App() {
                 element={
                   <LoggedInValidator>
                     <HomePage />
+                  </LoggedInValidator>
+                }
+              />
+              <Route
+                path="/file-manager"
+                element={
+                  <LoggedInValidator>
+                    <FileManagerPage />
                   </LoggedInValidator>
                 }
               />

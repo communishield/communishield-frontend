@@ -1,17 +1,20 @@
-import * as Form from '@radix-ui/react-form';
 import * as styles from './login.page.css';
-import { FormEvent, useContext, useState } from 'react';
-import {
-  CrossCircledIcon,
-  EyeClosedIcon,
-  EyeOpenIcon,
-} from '@radix-ui/react-icons';
-import { IconButton } from '@radix-ui/themes';
+import { useContext, useState } from 'react';
+import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
 import { Link } from '../../components/link';
 import { Communishield } from '../../third-parties/communishield/client';
 import { UserContext } from '../../contexts/user.context';
 import { ErrorContext } from '../../contexts/error.context';
 import { UnexpectedError } from '../../errors/unexpected.error';
+import {
+  Form,
+  FormField,
+  FormInput,
+  FormInputIcon,
+  FormInputWithIcon,
+  FormMessage,
+  FormSubmit,
+} from '../../components/form';
 
 export default function LoginPage() {
   const { setUser } = useContext(UserContext);
@@ -28,9 +31,7 @@ export default function LoginPage() {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     try {
       const token = await Communishield.login({
         username: formData.username,
@@ -59,62 +60,68 @@ export default function LoginPage() {
         </p>
       </section>
       <section className={styles.form}>
-        <Form.Root className={styles.formContainer} onSubmit={handleSubmit}>
-          <Form.Field className={styles.formField} name="username">
-            <Form.Label className={styles.label}>Username</Form.Label>
-            <Form.Message className={styles.errorText} match="valueMissing">
-              <CrossCircledIcon style={{ height: 12, width: 12 }} />
-              Please enter a username
-            </Form.Message>
-            <Form.Control asChild>
-              <input
-                required
-                className={styles.input}
-                type="text"
-                value={formData.username}
-                onChange={e =>
-                  setFormData({ ...formData, username: e.target.value })
-                }
-              />
-            </Form.Control>
-          </Form.Field>
-
-          <Form.Field className={styles.formField} name="password">
-            <Form.Label className={styles.label}>Password</Form.Label>
-            <Form.Message className={styles.errorText} match="valueMissing">
-              <CrossCircledIcon style={{ height: 12, width: 12 }} />
-              Please enter a password
-            </Form.Message>
-            <div className={styles.inputWithIconContainer}>
-              <Form.Control asChild>
+        <Form onSubmit={handleSubmit}>
+          <FormField
+            name="username"
+            label="Username"
+            messages={[
+              <FormMessage
+                key="usernameMissing"
+                level="error"
+                message="Please enter a username"
+                match="valueMissing"
+              />,
+            ]}
+            input={
+              <FormInput>
                 <input
                   required
-                  className={`${styles.input} ${styles.inputWithIcon}`}
+                  className={styles.input}
+                  type="text"
+                  value={formData.username}
+                  onChange={e =>
+                    setFormData({ ...formData, username: e.target.value })
+                  }
+                />
+              </FormInput>
+            }
+          />
+          <FormField
+            name="password"
+            label="Password"
+            messages={[
+              <FormMessage
+                key="passwordMissing"
+                level="error"
+                message="Please enter a password"
+                match="valueMissing"
+              />,
+            ]}
+            input={
+              <FormInputWithIcon
+                icon={
+                  <FormInputIcon
+                    ariaLabel={showPassword ? 'Hide password' : 'Show password'}
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
+                  </FormInputIcon>
+                }
+              >
+                <input
+                  required
+                  className={styles.input}
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={e =>
                     setFormData({ ...formData, password: e.target.value })
                   }
                 />
-              </Form.Control>
-              <IconButton
-                type="button"
-                variant="ghost"
-                color="gray"
-                className={styles.inputIcon}
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? <EyeOpenIcon /> : <EyeClosedIcon />}
-              </IconButton>
-            </div>
-          </Form.Field>
-
-          <Form.Submit asChild>
-            <button type="submit" className={styles.submitButton}>
-              Log in
-            </button>
-          </Form.Submit>
-        </Form.Root>
+              </FormInputWithIcon>
+            }
+          />
+          <FormSubmit label="Sign in" />
+        </Form>
       </section>
     </div>
   );

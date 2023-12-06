@@ -9,12 +9,12 @@ export const checkboxRoot = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  boxShadow: '0 2px 10px var(--black-a7)',
+  boxShadow: '0 2px 10px var(--black-a5)',
   ':hover': {
     backgroundColor: 'var(--green-3)',
   },
   ':focus': {
-    boxShadow: '0 0 0 2px black',
+    boxShadow: '0 0 0 2px var(--green-a7)',
   },
 });
 
