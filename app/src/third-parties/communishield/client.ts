@@ -13,7 +13,7 @@ import { InvalidRequestError } from './errors/invalid-request.error';
 
 export class Communishield {
   private static http = axios.create({
-    baseURL: 'http://localhost',
+    baseURL: '',
   });
 
   static setToken(token: string) {

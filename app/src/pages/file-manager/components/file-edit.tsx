@@ -12,12 +12,14 @@ import { Checkbox } from '../../../components/checkbox';
 import { Communishield } from '../../../third-parties/communishield/client';
 import { LoadingContext } from '../../../contexts/loading.context';
 import { ErrorContext } from '../../../contexts/error.context';
+import { joinUrl } from '../../../utils/join-url';
 
 export type FileEditProps = {
 	readonly file: File;
 };
 
 export function FileEdit({ file }: FileEditProps) {
+	console.log(file);
 	const { setLoading } = useContext(LoadingContext);
 	const { setError } = useContext(ErrorContext);
 	const [formData, setFormData] = useState<
@@ -31,9 +33,9 @@ export function FileEdit({ file }: FileEditProps) {
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		const data = JSON.parse(formData.data);
 
 		try {
+			const data = JSON.parse(formData.data);
 			await Communishield.updateFile(file.path, {
 				owner: formData.owner,
 				group: formData.group,
@@ -59,7 +61,7 @@ export function FileEdit({ file }: FileEditProps) {
 						name="owner"
 						messages={[
 							<FormMessage
-								key="fileEditOwner"
+								key={joinUrl(file.path, 'fileEditOwner')}
 								level="error"
 								message="This field is required."
 								match="valueMissing"
@@ -82,7 +84,7 @@ export function FileEdit({ file }: FileEditProps) {
 						name="group"
 						messages={[
 							<FormMessage
-								key="fileEditGroup"
+								key={joinUrl(file.path, 'fileEditGroup')}
 								level="error"
 								message="This field is required."
 								match="valueMissing"
@@ -234,13 +236,13 @@ export function FileEdit({ file }: FileEditProps) {
 						name="data"
 						messages={[
 							<FormMessage
-								key="fileEditData"
+								key={joinUrl(file.path, 'fileEditData')}
 								level="error"
 								message="This field is required."
 								match="valueMissing"
 							/>,
 							<FormMessage
-								key="fileEditDataJsonValidation"
+								key={joinUrl(file.path, 'fileEditDataJsonValidation')}
 								level="error"
 								message="Invalid JSON."
 								match={(value: string) => {

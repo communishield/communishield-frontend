@@ -83,7 +83,7 @@ export function FileTable({ directory, onFinish }: FileTableProps) {
       </Table.Header>
       <Table.Body>
         {directory.contents.map(file => (
-          <Table.Row key={file.name}>
+          <Table.Row key={joinUrl(directory.path, file.name)}>
             {file.type === 'file' ? (
               <InteractiveCell
                 color="blue"

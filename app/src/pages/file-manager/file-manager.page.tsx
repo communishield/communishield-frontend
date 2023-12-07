@@ -15,155 +15,156 @@ import { DirectoryEdit } from './components/directory-edit';
 import { DirectoryDelete } from './components/directory-delete';
 
 export function FileManagerPage() {
-  const { loading, setLoading } = useContext(LoadingContext);
-  const { setDialogProps } = useContext(DialogContext);
-  const { setError } = useContext(ErrorContext);
-  const [actionParams, setActionParams] = useState<
-    | {
-      action: 'create' | 'read' | 'update' | 'delete';
-      path: string;
-      type: 'file' | 'directory';
-    }
-    | undefined
-  >(undefined);
-  const [directory, setDirectory] = useState<Directory | undefined>(undefined);
-  const [searchQuery, setSearchQuery] = useState<string>('/');
+	const { loading, setLoading } = useContext(LoadingContext);
+	const { setDialogProps } = useContext(DialogContext);
+	const { setError } = useContext(ErrorContext);
+	const [actionParams, setActionParams] = useState<
+		| {
+				action: 'create' | 'read' | 'update' | 'delete';
+				path: string;
+				type: 'file' | 'directory';
+		  }
+		| undefined
+	>(undefined);
+	const [directory, setDirectory] = useState<Directory | undefined>(undefined);
+	const [searchQuery, setSearchQuery] = useState<string>('/');
 
-  const actionContextValue = useMemo(
-    () => ({
-      actionParams,
-      setActionParams,
-    }),
-    [actionParams, setActionParams]
-  );
+	const actionContextValue = useMemo(
+		() => ({
+			actionParams,
+			setActionParams,
+		}),
+		[actionParams, setActionParams]
+	);
 
-  const handleSearch = async (query: string) => {
-    setLoading(true);
+	const handleSearch = async (query: string) => {
+		setLoading(true);
 
-    try {
-      const directory = await Communishield.getDirectory(query);
+		try {
+			const directory = await Communishield.getDirectory(query);
 
-      setDirectory(directory);
-    } catch (error) {
-      setError(error as Error);
-    } finally {
-      setLoading(false);
-    }
-  };
+			setDirectory(directory);
+		} catch (error) {
+			setError(error as Error);
+		} finally {
+			setLoading(false);
+		}
+	};
 
-  useEffect(() => {
-    (async () => {
-      if (actionParams === undefined || loading) {
-        return;
-      }
+	useEffect(() => {
+		(async () => {
+			if (actionParams === undefined || loading) {
+				return;
+			}
 
-      setLoading(true);
+			setLoading(true);
 
-      const { action, path, type } = actionParams;
+			const { action, path, type } = actionParams;
 
-      try {
-        if (type === 'file') {
-          const file = await Communishield.getFile(path);
+			try {
+				if (type === 'file') {
+					const file = await Communishield.getFile(path);
+					console.log(path, file);
 
-          if (action === 'read') {
-            setDialogProps({
-              title: 'File Preview',
-              color: 'gray',
-              message: <FileView file={file} />,
-              isOpen: true,
-              onDismiss: () => { },
-            });
-            return;
-          }
+					if (action === 'read') {
+						setDialogProps({
+							title: 'File Preview',
+							color: 'gray',
+							message: <FileView file={file} />,
+							isOpen: true,
+							onDismiss: () => {},
+						});
+						return;
+					}
 
-          if (action === 'update') {
-            setDialogProps({
-              title: 'File Edit',
-              color: 'gray',
-              message: <FileEdit file={file} />,
-              isOpen: true,
-              onDismiss: () => { },
-            });
-            return;
-          }
+					if (action === 'update') {
+						setDialogProps({
+							title: 'File Edit',
+							color: 'gray',
+							message: <FileEdit file={file} />,
+							isOpen: true,
+							onDismiss: () => {},
+						});
+						return;
+					}
 
-          if (action === 'delete') {
-            setDialogProps({
-              title: 'File Delete',
-              color: 'gray',
-              message: (
-                <FileDelete
-                  file={file}
-                  onDelete={() => {
-                    handleSearch(directory?.path ?? '/');
-                  }}
-                />
-              ),
-              isOpen: true,
-              onDismiss: () => { },
-            });
-            return;
-          }
-        } else if (type === 'directory') {
-          const targetDirectory = await Communishield.getDirectory(path);
+					if (action === 'delete') {
+						setDialogProps({
+							title: 'File Delete',
+							color: 'gray',
+							message: (
+								<FileDelete
+									file={file}
+									onDelete={() => {
+										handleSearch(directory?.path ?? '/');
+									}}
+								/>
+							),
+							isOpen: true,
+							onDismiss: () => {},
+						});
+						return;
+					}
+				} else if (type === 'directory') {
+					const targetDirectory = await Communishield.getDirectory(path);
 
-          if (action === 'update') {
-            setDialogProps({
-              title: 'Directory Edit',
-              color: 'gray',
-              message: <DirectoryEdit directory={targetDirectory} />,
-              isOpen: true,
-              onDismiss: () => { },
-            });
-            return;
-          }
+					if (action === 'update') {
+						setDialogProps({
+							title: 'Directory Edit',
+							color: 'gray',
+							message: <DirectoryEdit directory={targetDirectory} />,
+							isOpen: true,
+							onDismiss: () => {},
+						});
+						return;
+					}
 
-          if (action === 'delete') {
-            setDialogProps({
-              title: 'Directory Delete',
-              color: 'gray',
-              message: (
-                <DirectoryDelete
-                  directory={targetDirectory}
-                  onDelete={() => {
-                    handleSearch(directory?.path ?? '/');
-                  }}
-                />
-              ),
-              isOpen: true,
-              onDismiss: () => { },
-            });
-            return;
-          }
-        }
-      } catch (error) {
-        setError(error as Error);
-      } finally {
-        setLoading(false);
-        setActionParams(undefined);
-      }
-    })();
-  });
+					if (action === 'delete') {
+						setDialogProps({
+							title: 'Directory Delete',
+							color: 'gray',
+							message: (
+								<DirectoryDelete
+									directory={targetDirectory}
+									onDelete={() => {
+										handleSearch(directory?.path ?? '/');
+									}}
+								/>
+							),
+							isOpen: true,
+							onDismiss: () => {},
+						});
+						return;
+					}
+				}
+			} catch (error) {
+				setError(error as Error);
+			} finally {
+				setLoading(false);
+				setActionParams(undefined);
+			}
+		})();
+	});
 
-  return (
-    <ActionContext.Provider value={actionContextValue}>
-      <div className={styles.container}>
-        <section className={styles.search}>
-          <Search
-            path={searchQuery}
-            setPath={setSearchQuery}
-            onSubmit={handleSearch}
-          />
-        </section>
-        <section className={styles.fileManager}>
-          <FileTable
-            directory={directory}
-            onFinish={() => {
-              handleSearch(directory?.path ?? '/');
-            }}
-          />
-        </section>
-      </div>
-    </ActionContext.Provider>
-  );
+	return (
+		<ActionContext.Provider value={actionContextValue}>
+			<div className={styles.container}>
+				<section className={styles.search}>
+					<Search
+						path={searchQuery}
+						setPath={setSearchQuery}
+						onSubmit={handleSearch}
+					/>
+				</section>
+				<section className={styles.fileManager}>
+					<FileTable
+						directory={directory}
+						onFinish={() => {
+							handleSearch(directory?.path ?? '/');
+						}}
+					/>
+				</section>
+			</div>
+		</ActionContext.Provider>
+	);
 }
